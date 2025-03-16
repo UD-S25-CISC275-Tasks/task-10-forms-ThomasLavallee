@@ -11,30 +11,31 @@ export function EditMode(): React.JSX.Element {
     // User's student status state
     const [isStudent, setStudent] = useState<string>("student");
 
-    function updateStudent(event: React.ChangeEvent<HTMLInputElement>) {
-        setStudent(event.target.value);
+    // Change student status to be opposite of what it is
+    function updateStudent() {
+        if (isStudent === "student") {
+            setStudent("not");
+        } else {
+            setStudent("student");
+        }
     }
 
     return (
         <div>
-            <h3>Edit Mode</h3>
-            <Form.Group id="editStudentForm">
-                <Form.Switch
-                    type="switch"
-                    label="Toggle Edit Mode"
-                    checked={isEditMode}
-                    onChange={() => {
-                        setMode(!isEditMode);
-                    }}
-                ></Form.Switch>
-            </Form.Group>
+            <Form.Switch
+                type="switch"
+                label="Toggle Edit Mode"
+                checked={isEditMode}
+                onChange={() => {
+                    setMode(!isEditMode);
+                }}
+            ></Form.Switch>
 
             {isEditMode ?
-                <Form.Group>
+                <Form.Group controlId="formEditMode">
                     <Form.Label>Edit Student Name</Form.Label>
                     <Form.Control
                         type="text"
-                        value={userName}
                         onChange={(
                             event: React.ChangeEvent<HTMLInputElement>,
                         ) => {
@@ -42,29 +43,19 @@ export function EditMode(): React.JSX.Element {
                         }}
                     ></Form.Control>
 
-                    <Form.Label>Student Status</Form.Label>
                     <Form.Check
-                        inline
                         type="checkbox"
+                        role="checkbox"
                         name="student"
                         label="Student"
+                        id="student"
                         value="student"
                         onChange={updateStudent}
                         checked={isStudent === "student"}
                     ></Form.Check>
-                    <Form.Check
-                        inline
-                        type="checkbox"
-                        name="student"
-                        label="Not a Student"
-                        value="not a student"
-                        onChange={updateStudent}
-                        checked={isStudent !== "student"}
-                    ></Form.Check>
                 </Form.Group>
             :   <span>
-                    {userName} is {isStudent === "student" ? "" : "not"} a
-                    student
+                    {`${userName} is ${isStudent === "student" ? " " : "not "}a student`}
                 </span>
             }
         </div>
