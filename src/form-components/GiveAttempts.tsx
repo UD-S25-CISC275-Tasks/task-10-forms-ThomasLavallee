@@ -16,6 +16,16 @@ export function GiveAttempts(): React.JSX.Element {
         }
     }
 
+    function changeRequestedAttempts(
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) {
+        let newValue: number = parseInt(event.target.value);
+
+        if (!isNaN(newValue)) {
+            setRequestedAttempts(newValue);
+        }
+    }
+
     return (
         <div>
             <h3>Give Attempts</h3>
@@ -26,9 +36,7 @@ export function GiveAttempts(): React.JSX.Element {
                 <Form.Control
                     type="number"
                     value={requestedAttempts}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        setRequestedAttempts(parseInt(event.target.value));
-                    }}
+                    onChange={changeRequestedAttempts}
                 ></Form.Control>
             </Form.Group>
 
